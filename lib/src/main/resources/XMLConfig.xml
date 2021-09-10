@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans  
+    xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+               http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+               http://www.springframework.org/schema/context  
+               http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+                 
+<!--  To read values from properties file  -->
+<context:property-placeholder location="classpath:config.properties"/>
+
+
+ <bean id="address" class="com.InversionOfControl.Address">
+	 <constructor-arg value="${config.address.street}"></constructor-arg>
+	 <constructor-arg value="${config.address.city}"></constructor-arg>  
+	 <constructor-arg value="${config.address.state}"></constructor-arg>  
+	 <constructor-arg value="${config.address.country}"></constructor-arg>  
+ </bean>
+ 
+ <bean id="student" class="com.InversionOfControl.Student">
+	 <constructor-arg value="${config.student.id}" type="int"></constructor-arg>
+	 <constructor-arg value="${config.student.name}"></constructor-arg>
+	 <constructor-arg>
+		 <ref bean="address"/>
+	 </constructor-arg>
+ </bean> 
+ 
+ 
+ <bean id="op1" class="com.InversionOfControl.Option">
+ 	<constructor-arg value="${config.op1.id}" type="int"></constructor-arg>
+ 	<constructor-arg value="${config.op1.value}"></constructor-arg>
+ 	<property name="isCorrect" value="${config.op1.correct}"></property>
+ </bean>
+  <bean id="op2" class="com.InversionOfControl.Option">
+ 	<constructor-arg value="${config.op2.id}" type="int"></constructor-arg>
+ 	<constructor-arg value="${config.op2.value}"></constructor-arg>
+ 	<property name="isCorrect" value="${config.op2.correct}"></property>
+ </bean>
+  <bean id="op3" class="com.InversionOfControl.Option">
+ 	<constructor-arg value="${config.op3.id}" type="int"></constructor-arg>
+ 	<constructor-arg value="${config.op3.value}"></constructor-arg>
+ 	<property name="isCorrect" value="${config.op3.correct}"></property>
+ </bean>
+ 
+ <bean id="question" class="com.InversionOfControl.Question">
+ <constructor-arg value="${config.question.id}" type="int"></constructor-arg>
+ <constructor-arg value="${config.question.value}"></constructor-arg>
+ <constructor-arg>
+ <list>
+ <ref bean="op1"></ref>
+ <ref bean="op2"></ref>
+ <ref bean="op3"></ref>
+ </list>
+ </constructor-arg>
+ </bean>
+</beans>  
